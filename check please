@@ -1,0 +1,60 @@
+from tkinter import *
+
+class Application(Frame):
+    '''GUI- приложение, "Счет пожалуйста!"'''
+    def __init__(self, master):
+        super(Application, self).__init__(master)
+        self.grid()
+        self.create_widgets()
+    def create_widgets(self):
+        #метка при группе флажков
+        Label(self, text = 'Выберите что по есть, по пить: ').grid(row=0, column =0 , sticky = W)
+        #флажки
+        self.sandwich = BooleanVar()
+        Checkbutton(self, text ='бутерброд(100р)', variable = self.sandwich
+                    ).grid(row =0, column = 1, sticky = W)
+        self.pasta = BooleanVar()
+        Checkbutton(self, text = 'макароны(40р)', variable = self.pasta
+                    ).grid(row =0, column =2, sticky = W)
+        self.cutlet = BooleanVar()
+        Checkbutton(self, text = 'катлета(30р)', variable=self.cutlet
+                    ).grid(row =0, column =3, sticky = W)
+        self.cola = BooleanVar()
+        Checkbutton(self, text = "колла(50р)", variable=self.cola
+                    ).grid(row =1, column = 1, sticky = W)
+        self.tea = BooleanVar()
+        Checkbutton(self, text="чай(20р)", variable=self.tea
+                    ).grid(row=1, column=2, sticky=W)
+        self.water = BooleanVar()
+        Checkbutton(self, text="вода(10р)", variable=self.water
+                    ).grid(row=1, column=3, sticky=W)
+        #кнопка отсылки данных
+        Button(self, text='Нажмите чтобы узнать цену заказа',
+               command=self.check
+               ).grid(row=2, column=0, sticky=W)
+        self.story_text = Text(self, width=75, height=10, wrap=WORD)
+        self.story_text.grid(row=3, column=0, columnspan=4)
+    def check(self):
+        #get values from GUI
+        sum = 0
+        if self.sandwich.get():
+            sum += 100
+        if self.pasta.get():
+            sum += 40
+        if self.cutlet.get():
+            sum += 30
+        if self.cola.get():
+            sum += 50
+        if self.tea.get():
+            sum += 20
+        if self.water.get():
+            sum += 10
+        sum = str(sum)
+        message = 'Ваш счет:'+sum + 'рублей'
+        self.story_text.delete(0.0, END)
+        self.story_text.insert(0.0, message)
+#основная часть
+root =Tk()
+root.title('Счет пожалуйста')
+app = Application(root)
+root.mainloop()
